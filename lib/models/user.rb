@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
     validates :name, presence: true
     validates :email, presence: true, uniqueness: true
     validates :role, presence: true
+
+    enum status: { pending: 0, in_progress: 1 }
 end
