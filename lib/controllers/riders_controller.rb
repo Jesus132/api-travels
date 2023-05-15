@@ -1,5 +1,12 @@
 class RidersController < BaseController
 
+  patch '/rider/payment' do
+    # obtener los datos del jinete desde los parámetros de la solicitud
+    body = JSON.parse request.body.read
+    rider = RiderService.new.create_payment_method(body['email'])
+    rider.to_json
+  end
+
   post '/rider' do
     # obtener los datos del jinete desde los parámetros de la solicitud
     body = JSON.parse request.body.read

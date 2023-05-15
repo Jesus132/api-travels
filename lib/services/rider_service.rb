@@ -1,4 +1,14 @@
 class RiderService < BaseService
+  def create_payment_method(email)
+    user_repository = UserRepository.new
+    rider = user_repository.find_by_email(email, 'rider')
+    return add_error('Invalid rider') unless rider.present?
+    tokens_cards = Payment.new.token_cards(rider[:name], email)
+    p tokens_cards
+    rider.update(pay: tokens_cards)
+    {"status": "CREATED"}
+  end
+
   def create_travel(email, lat, long)
     user_repository = UserRepository.new
     travel_repository = TravelRepository.new
